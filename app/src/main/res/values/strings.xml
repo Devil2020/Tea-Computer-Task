@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Tea Computer Task</string>
     <string name="enter_now">Enter Now</string>
+    <string name="on_boarding_body">Watch everything you want for free!</string>
+    <string name="on_boarding_title">Onboarding</string>
+    <string name="get_start_now">Enter now</string>
+    <string name="search_for_content">Search for a content</string>
+    <string name="categories">Categories.</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <string name="most_searched_items">Most searched.</string>
+    <string name="retry">Retry</string>
+    <string name="watch_now">Watch now</string>
+    <string name="welcome_message">"Welcome back "</string>
+    <string name="name">Mohammed morse 👋🏻</string>
 </resources>

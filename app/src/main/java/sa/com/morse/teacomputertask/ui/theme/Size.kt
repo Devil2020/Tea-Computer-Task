@@ -12,12 +12,15 @@ object FontSize {
     val _12SP: TextUnit = 12.sp
     val _14SP: TextUnit = 14.sp
     val _16SP: TextUnit = 16.sp
+    val _18SP: TextUnit = 18.sp
     val _20SP: TextUnit = 20.sp
     val _24SP: TextUnit = 24.sp
     val _32SP: TextUnit = 32.sp
 }
 
 object AppSizes {
+    val _10_DP : Dp = 10.dp
+    val _20_DP : Dp = 20.dp
     val _30_DP : Dp = 30.dp
     val _40_DP : Dp = 40.dp
     val _50_DP : Dp = 50.dp
