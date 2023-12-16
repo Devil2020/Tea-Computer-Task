@@ -5,7 +5,7 @@ object Versions {
     }
 
     object ImageLoader {
-
+        const val CoilVersion = "2.5.0"
     }
 
     object NetworkLibraries {
@@ -53,6 +53,7 @@ object Versions {
     object Jetpack {
         val ComposeVersion = "2023.08.00"
         const val ActivityComposeVersion = "1.8.1"
+        const val NavigationRuntimeVersion = "2.7.5"
         const val NavigationComposeVersion = "2.7.5"
         const val AccompanistComposeVersion = "0.32.0"
         const val LifeCycleVersion = "2.6.2"

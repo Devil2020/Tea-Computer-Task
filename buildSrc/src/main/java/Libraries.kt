@@ -6,7 +6,7 @@ object CustomViews {
 }
 
 object ImageLoader {
-
+    const val Coin = "io.coil-kt:coil-compose:${Versions.ImageLoader.CoilVersion}"
 }
 
 object NetworkLibrary {
@@ -18,6 +18,7 @@ object NetworkLibrary {
         "com.squareup.okhttp3:logging-interceptor:${Versions.NetworkLibraries.OkHttpVersion}",
         "com.squareup.retrofit2:converter-scalars:${Versions.NetworkLibraries.RetrofitVersion}",
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.NetworkLibraries.CoroutineAdapterVersion}",
+         "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
     )
 
 }
@@ -86,7 +87,17 @@ object Ktx {
 }
 
 object Navigation {
-   const val ComposeNavigation = "androidx.navigation:navigation-runtime-ktx:${Versions.Jetpack.NavigationComposeVersion}"
+   const val NavigationRuntime = "androidx.navigation:navigation-runtime-ktx:${Versions.Jetpack.NavigationRuntimeVersion}"
+    const val ComposeNavigation= "androidx.navigation:navigation-compose:${Versions.Jetpack.NavigationComposeVersion}"
+}
+
+object Observable {
+     val RX = arrayListOf(
+     //  "com.github.skydoves:landscapist-rxbinding-compose:1.3.7" ,
+         "io.reactivex.rxjava3:rxkotlin:3.0.1" ,
+         "io.reactivex.rxjava3:rxandroid:3.0.0" ,
+         "io.reactivex.rxjava3:rxjava:3.1.3"
+    )
 }
 
 object Jetpack {

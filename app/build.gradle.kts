@@ -22,15 +22,25 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
-        release {
+        getByName( "release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug"){
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "api", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "key", "\"12ae0210d107863fd1d89b1e2ee1f26a\"")
         }
     }
     compileOptions {
@@ -43,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -63,11 +74,25 @@ dependencies {
     Jetpack.Compose.forEach { library ->
         implementation(library)
     }
-    implementation (MaterialDesign.Constrainlayout)
+    implementation(ImageLoader.Coin)
+    NetworkLibrary.Retrofit.forEach { library ->
+        implementation(library)
+    }
+    Observable.RX.forEach {library ->
+        implementation(library)
+    }
+    implementation(JsonParser.Gson)
+    DataBase.Room.forEach { library ->
+        implementation(library)
+    }
+    DI.Koin.forEach { library ->
+        implementation(library)
+    }
+    implementation(MaterialDesign.Constrainlayout)
     implementation(Navigation.ComposeNavigation)
-    implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation(Navigation.NavigationRuntime)
     testImplementation(Testing.Junit)
-    androidTestImplementation( Testing.JunitExtensions)
+    androidTestImplementation(Testing.JunitExtensions)
     androidTestImplementation(UITesting.Espresso)
     androidTestImplementation(platform(Jetpack.ComposePlatform))
     androidTestImplementation(UITesting.ComposeJunit)
