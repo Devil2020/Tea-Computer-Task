@@ -44,7 +44,7 @@ import sa.com.morse.teacomputertask.ui.theme.FontSize
 @Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(modifier: Modifier = Modifier , openDetails : (Int)->Unit = {}) {
     ConstraintLayout(modifier = Modifier
         .fillMaxSize()
         .background(AppColors.Black1A1A1D)
@@ -142,7 +142,9 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             state = scroll
         ) {
             items(20) {
-                MovieOrSeriesItem()
+                MovieOrSeriesItem{
+                    openDetails.invoke(it)
+                }
             }
         }
 

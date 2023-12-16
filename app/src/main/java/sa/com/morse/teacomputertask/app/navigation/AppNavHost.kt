@@ -16,25 +16,36 @@ fun MovieNavigation() {
     val controller = rememberNavController()
     NavHost(
         navController = controller,
-        startDestination = MovieRoutes.DetailsRoute.name
+        startDestination = MovieRoutes.GetStartedRoute.name
     ) {
-        composable(MovieRoutes.GetStartedRoute.name){
-            GetStartedScreen()
+        composable(MovieRoutes.GetStartedRoute.name) {
+            GetStartedScreen {
+                MoviesDirections.openHomeScreen(controller)
+            }
         }
-        composable(MovieRoutes.HomeRoute.name){
-            HomeScreen()
+        composable(MovieRoutes.HomeRoute.name) {
+            HomeScreen(openMovies = { MoviesDirections.openMoviesScreen(controller) },
+                openSeries = { MoviesDirections.openSeriesScreen(controller) },
+                openSearch = { MoviesDirections.openSearchScreen(controller) },
+                openDetails = { MoviesDirections.openMovieDetailsScreen(controller , it) })
         }
-        composable(MovieRoutes.DetailsRoute.name){
+        composable(MovieRoutes.DetailsRoute.name) {
             DetailScreen()
         }
-        composable(MovieRoutes.SearchRoute.name){
-            SearchScreen()
+        composable(MovieRoutes.SearchRoute.name) {
+            SearchScreen{
+                MoviesDirections.openMovieDetailsScreen(controller , it)
+            }
         }
-        composable(MovieRoutes.MoviesRoute.name){
-            MoviesScreen()
+        composable(MovieRoutes.MoviesRoute.name) {
+            MoviesScreen{
+                MoviesDirections.openMovieDetailsScreen(controller , it)
+            }
         }
-        composable(MovieRoutes.SeriesRoute.name){
-            SeriesScreen()
+        composable(MovieRoutes.SeriesRoute.name) {
+            SeriesScreen{
+                MoviesDirections.openMovieDetailsScreen(controller , it)
+            }
         }
     }
 }

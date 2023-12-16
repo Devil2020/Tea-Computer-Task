@@ -29,7 +29,7 @@ import sa.com.morse.teacomputertask.ui.theme.FontSize
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun MoviesScreen(modifier: Modifier = Modifier) {
+fun MoviesScreen(modifier: Modifier = Modifier, openDetails: (Int) -> Unit = {}) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -79,7 +79,9 @@ fun MoviesScreen(modifier: Modifier = Modifier) {
             state = scroll
         ) {
             items(20) {
-                MovieOrSeriesItem()
+                MovieOrSeriesItem{
+                    openDetails.invoke(it)
+                }
             }
         }
     }

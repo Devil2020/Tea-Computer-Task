@@ -50,7 +50,13 @@ import sa.com.morse.teacomputertask.utils.base.ErrorView
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    openMovies: () -> Unit = {},
+    openSeries: () -> Unit = {},
+    openSearch: () -> Unit = {},
+    openDetails: (Int) -> Unit = {}
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -109,15 +115,15 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             }
         )
 
-        IconButton(onClick = { } , modifier = Modifier.constrainAs(search){
-            linkTo(welcomeMessage.top , userName.bottom)
+        IconButton(onClick = openSearch, modifier = Modifier.constrainAs(search) {
+            linkTo(welcomeMessage.top, userName.bottom)
             end.linkTo(endGuideline)
             width = Dimension.preferredValue(20.dp)
             height = Dimension.wrapContent
         }) {
             Icon(
                 painter = painterResource(id = R.drawable.icon_search_),
-                contentDescription = "Search Icon" , tint = Color.White
+                contentDescription = "Search Icon", tint = Color.White
             )
         }
 
@@ -133,17 +139,21 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             }
         )
 
-        MoviesCategoryItem(modifier = Modifier.constrainAs(moviesView) {
-            linkTo(parent.start, centerGuideline, endMargin = 0.dp)
-            top.linkTo(categoriesTitle.bottom, 5.dp)
-            width = Dimension.fillToConstraints
-        })
+        MoviesCategoryItem(modifier = Modifier
+            .constrainAs(moviesView) {
+                linkTo(parent.start, centerGuideline, endMargin = 0.dp)
+                top.linkTo(categoriesTitle.bottom, 5.dp)
+                width = Dimension.fillToConstraints
+            }
+            .clickable (onClick = openMovies))
 
-        SeriesCategoryItem(modifier = Modifier.constrainAs(seriesView) {
-            linkTo(centerGuideline, parent.end, startMargin = 0.dp)
-            width = Dimension.fillToConstraints
-            top.linkTo(categoriesTitle.bottom, 5.dp)
-        })
+        SeriesCategoryItem(modifier = Modifier
+            .constrainAs(seriesView) {
+                linkTo(centerGuideline, parent.end, startMargin = 0.dp)
+                width = Dimension.fillToConstraints
+                top.linkTo(categoriesTitle.bottom, 5.dp)
+            }
+            .clickable(onClick = openSeries))
 
         Text(
             text = stringResource(id = R.string.most_searched_items),
@@ -168,7 +178,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             state = scroll
         ) {
             items(10) {
-                MovieOrSeriesItem()
+                MovieOrSeriesItem{
+
+                }
             }
         }
 
@@ -248,12 +260,15 @@ fun SeriesCategoryItem(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieOrSeriesItem(modifier: Modifier = Modifier) {
+fun MovieOrSeriesItem(modifier: Modifier = Modifier , onClick : (Int)->Unit) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(10.dp)
+            .clickable {
+                onClick.invoke(1)
+            }
             .then(modifier)
     ) {
         Image(
@@ -269,7 +284,7 @@ fun MovieOrSeriesItem(modifier: Modifier = Modifier) {
             color = AppColors.GrayE8E8E8,
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold,
-            fontSize = FontSize._14SP ,
+            fontSize = FontSize._14SP,
             textAlign = TextAlign.Center
         )
 

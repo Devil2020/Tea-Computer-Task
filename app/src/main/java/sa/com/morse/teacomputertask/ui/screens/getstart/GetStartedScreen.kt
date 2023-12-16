@@ -32,7 +32,7 @@ import sa.com.morse.teacomputertask.utils.base.ShadowButton
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GetStartedScreen(modifier: Modifier = Modifier) {
+fun GetStartedScreen(modifier: Modifier = Modifier , navigateToHome : () -> Unit = {}) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -43,8 +43,8 @@ fun GetStartedScreen(modifier: Modifier = Modifier) {
         val (button, body, title, image) = createRefs()
 
         ShadowButton(name =  stringResource(id = R.string.get_start_now) , modifier = Modifier
-            .clickable { }
-            .padding(20.dp)
+            .clickable { navigateToHome.invoke() }
+            .padding(70.dp)
             .constrainAs(button) {
                 bottom.linkTo(parent.bottom)
                 linkTo(parent.start, parent.end)

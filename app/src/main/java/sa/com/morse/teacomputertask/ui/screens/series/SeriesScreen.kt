@@ -2,6 +2,7 @@ package sa.com.morse.teacomputertask.ui.screens.series
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,7 +39,7 @@ import sa.com.morse.teacomputertask.ui.theme.FontSize
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SeriesScreen(modifier: Modifier = Modifier) {
+fun SeriesScreen(modifier: Modifier = Modifier , openDetails :( Int) -> Unit = {  }) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +87,9 @@ fun SeriesScreen(modifier: Modifier = Modifier) {
             },
         ) {
             items(20) {
-                SeriesItem()
+                SeriesItem{
+                    openDetails.invoke(it)
+                }
             }
         }
     }
@@ -94,12 +97,13 @@ fun SeriesScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SeriesItem(modifier: Modifier = Modifier) {
+fun SeriesItem(modifier: Modifier = Modifier , onClick : (Int)->Unit) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .height(180.dp)
             .padding(top = 20.dp)
+            .clickable { onClick.invoke(1) }
             .then(modifier)
     ) {
         val (background, image, name, extraInfo) = createRefs()
