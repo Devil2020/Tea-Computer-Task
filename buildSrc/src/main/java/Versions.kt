@@ -16,7 +16,7 @@ object Versions {
     }
 
     object DataBase {
-        const val RoomVersion = "2.2.5"
+        const val RoomVersion = "2.6.1"
         const val RoomTestingVersion = "2.4.0"
     }
 

@@ -1,5 +1,3 @@
-
-
 object CustomViews {
 
     const val Flashbar =
@@ -20,7 +18,7 @@ object NetworkLibrary {
         "com.squareup.okhttp3:logging-interceptor:${Versions.NetworkLibraries.OkHttpVersion}",
         "com.squareup.retrofit2:converter-scalars:${Versions.NetworkLibraries.RetrofitVersion}",
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.NetworkLibraries.CoroutineAdapterVersion}",
-         "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" ,
+        "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava",
         "com.github.akarnokd:rxjava3-retrofit-adapter:${Versions.NetworkLibraries.RXVersion}"
     )
 
@@ -28,10 +26,11 @@ object NetworkLibrary {
 
 object DataBase {
 
+   const val RoomKapt = "androidx.room:room-compiler:${Versions.DataBase.RoomVersion}"
     val Room = arrayListOf(
         "androidx.room:room-runtime:${Versions.DataBase.RoomVersion}",
-        "androidx.room:room-compiler:${Versions.DataBase.RoomVersion}",
-        "androidx.room:room-ktx:${Versions.DataBase.RoomVersion}"
+        "androidx.room:room-ktx:${Versions.DataBase.RoomVersion}" ,
+        "androidx.room:room-rxjava3:${Versions.DataBase.RoomVersion}"
     )
 
 }
@@ -41,7 +40,7 @@ object DI {
     val Koin = arrayListOf(
         "io.insert-koin:koin-core:${Versions.DI.KoinVersion}",
         "io.insert-koin:koin-android:${Versions.DI.KoinAndroidVersion}",
-         "io.insert-koin:koin-androidx-compose:3.4.1"
+        "io.insert-koin:koin-androidx-compose:3.4.1"
     )
 
 
@@ -49,12 +48,14 @@ object DI {
 
 object MaterialDesign {
 
-    val Constrainlayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.MaterialDesign.ConstrainLayoutVersion}"
+    val Constrainlayout =
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.MaterialDesign.ConstrainLayoutVersion}"
 
 }
 
 object Testing {
     const val Junit = "junit:junit:${Versions.Testing.JunitVersion}"
+    const val Junit5 = "org.junit.jupiter:junit-jupiter:5.8.1"
     const val JunitExtensions =
         "androidx.test.ext:junit:${Versions.Testing.JunitExtensionVersion}"
     const val JunitExtensionsKtx =
@@ -75,6 +76,8 @@ object Testing {
 }
 
 object UITesting {
+    const val Truth  = "com.google.truth:truth:1.1.4"
+    val Core = "androidx.arch.core:core-testing:2.1.0"
     val Espresso = "androidx.test.espresso:espresso-core:${Versions.UITesting.EspressoVersion}"
     const val ComposeJunit = "androidx.compose.ui:ui-test-junit4"
     const val ComposeToolsJunit = "androidx.compose.ui:ui-tooling"
@@ -91,16 +94,18 @@ object Ktx {
 }
 
 object Navigation {
-   const val NavigationRuntime = "androidx.navigation:navigation-runtime-ktx:${Versions.Jetpack.NavigationRuntimeVersion}"
-    const val ComposeNavigation= "androidx.navigation:navigation-compose:${Versions.Jetpack.NavigationComposeVersion}"
+    const val NavigationRuntime =
+        "androidx.navigation:navigation-runtime-ktx:${Versions.Jetpack.NavigationRuntimeVersion}"
+    const val ComposeNavigation =
+        "androidx.navigation:navigation-compose:${Versions.Jetpack.NavigationComposeVersion}"
 }
 
 object Observable {
-     val RX = arrayListOf(
-     //  "com.github.skydoves:landscapist-rxbinding-compose:1.3.7" ,
-         "io.reactivex.rxjava3:rxkotlin:3.0.1" ,
-         "io.reactivex.rxjava3:rxandroid:3.0.0" ,
-         "io.reactivex.rxjava3:rxjava:3.1.3"
+    val RX = arrayListOf(
+        //  "com.github.skydoves:landscapist-rxbinding-compose:1.3.7" ,
+        "io.reactivex.rxjava3:rxkotlin:3.0.1",
+        "io.reactivex.rxjava3:rxandroid:3.0.0",
+        "io.reactivex.rxjava3:rxjava:3.1.3"
     )
 }
 

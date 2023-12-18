@@ -7,6 +7,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import sa.com.morse.teacomputertask.app.di.Providers
+import java.util.logging.Handler
 
 
 class MoviesApplication ()  :Application(){
@@ -14,11 +15,14 @@ class MoviesApplication ()  :Application(){
     override fun onCreate() {
         super.onCreate()
         startInjectKoin()
-        //uncaughtExceptionHandler()
+        uncaughtExceptionHandler()
     }
 
     private fun uncaughtExceptionHandler(){
         RxJavaPlugins.setErrorHandler{
+
+        }
+        Thread.setDefaultUncaughtExceptionHandler { t, e ->
 
         }
     }

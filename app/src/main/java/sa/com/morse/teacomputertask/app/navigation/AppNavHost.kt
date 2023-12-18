@@ -31,7 +31,7 @@ fun MovieNavigation() {
             }
         }
         composable(MovieRoutes.HomeRoute.name) {
-            HomeScreen(openMovies = { MoviesDirections.openMoviesScreen(controller) },
+            HomeScreen(vm = koinViewModel() , openMovies = { MoviesDirections.openMoviesScreen(controller) },
                 openSeries = { MoviesDirections.openSeriesScreen(controller) },
                 openSearch = { MoviesDirections.openSearchScreen(controller) },
                 openDetails = { id, isMovie ->

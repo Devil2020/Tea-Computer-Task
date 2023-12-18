@@ -1,5 +1,6 @@
 package sa.com.morse.teacomputertask.data.models
 
+import sa.com.morse.teacomputertask.domain.models.Actors
 import sa.com.morse.teacomputertask.domain.models.Detail
 import sa.com.morse.teacomputertask.utils.Constants
 
@@ -39,7 +40,7 @@ data class ASeriesOfDetailResponse(
 ) {
 
     private fun getBackgroundImage() = "${Constants.imageApiBackground}/$backdrop_path"
-    fun toDetails(actors: ArrayList<ActorsResponse.User>) = Detail(getBackgroundImage() ,id , overview , name , false , first_air_date , actors , status)
+    fun toDetails(actors: ArrayList<ActorsResponse.User>) = Detail(getBackgroundImage() ,id , overview , name , false , first_air_date ,  Actors(actors) , status)
 
     data class CreatedBy(
         val credit_id: String?,

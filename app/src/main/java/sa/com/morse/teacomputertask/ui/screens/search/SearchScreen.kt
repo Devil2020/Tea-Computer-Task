@@ -73,6 +73,7 @@ fun SearchScreen(
             .background(AppColors.Black1A1A1D)
             .then(modifier)
     ) {
+
         val scroll = rememberLazyGridState()
         val (actionbar, searchView, list) = createRefs()
         val startGuideline = createGuidelineFromStart(0.05F)
@@ -177,21 +178,27 @@ fun SearchScreen(
             }
             ?.onSuccess {
                 it.onEmpty {
-                    EmptyView(modifier = contentModifier , message = stringResource(id = R.string.not_found_result))
+                    EmptyView(
+                        modifier = contentModifier,
+                        message = stringResource(id = R.string.not_found_result)
+                    )
                 }.onNotEmpty {
                     LazyVerticalGrid(
                         modifier = contentModifier,
                         columns = GridCells.Adaptive(minSize = 100.dp),
                         state = scroll
                     ) {
-                        items(it) {item ->
+                        items(it) { item ->
                             MovieOrSeriesItem(item = item) { id, isMovie ->
+                                search = ""
+                                vm.save(item)
                                 openDetails.invoke(id, isMovie)
                             }
                         }
                     }
                 }
             }
+
     }
 
 }

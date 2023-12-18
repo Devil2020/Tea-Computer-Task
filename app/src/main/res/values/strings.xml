@@ -15,4 +15,5 @@
     <string name="name">Mohammed morse 👋🏻</string>
     <string name="not_found_result">No Results Found for movies or series</string>
     <string name="you_must_search">You must to search about any movie or series and press on it to show it details</string>
+    <string name="can_not_load_search">Can`t load most search items , please try again later</string>
 </resources>

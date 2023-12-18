@@ -1,5 +1,6 @@
 package sa.com.morse.teacomputertask.data.models
 
+import sa.com.morse.teacomputertask.domain.models.Actors
 import sa.com.morse.teacomputertask.domain.models.Detail
 import sa.com.morse.teacomputertask.utils.Constants
 
@@ -31,7 +32,7 @@ data class MovieDetailResponse(
     val vote_count: Int?
 ) {
    private fun getBackgroundImage() = "${Constants.imageApiBackground}/$backdrop_path"
-    fun toDetails(actors : List<ActorsResponse.User>) = Detail(getBackgroundImage() ,id , overview , title , video , release_date , actors , status )
+    fun toDetails(actors : List<ActorsResponse.User>) = Detail(getBackgroundImage() ,id , overview , title , video , release_date , Actors(actors) , status )
 
     data class Genre(
         val id: Int?,

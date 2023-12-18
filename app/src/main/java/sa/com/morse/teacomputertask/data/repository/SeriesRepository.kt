@@ -3,14 +3,12 @@ package sa.com.morse.teacomputertask.data.repository
 import io.reactivex.rxjava3.core.Observable
 import sa.com.morse.teacomputertask.data.models.ASeriesOfDetailResponse
 import sa.com.morse.teacomputertask.data.models.ActorsResponse
-import sa.com.morse.teacomputertask.data.models.MovieDetailResponse
-import sa.com.morse.teacomputertask.data.models.MoviesResponse
 import sa.com.morse.teacomputertask.data.models.SeriesResponse
-import sa.com.morse.teacomputertask.domain.repositories.IMoviesRepository
 import sa.com.morse.teacomputertask.domain.repositories.ISeriesRepository
+import sa.com.morse.teacomputertask.local.RoomApi
 import sa.com.morse.teacomputertask.remote.MoviesApi
 
-class SeriesRepository(private val remote: MoviesApi) : ISeriesRepository {
+class SeriesRepository(private val remote: MoviesApi , private val cache : RoomApi) : ISeriesRepository , CommonRepository(cache) {
     override fun search(seriesName: String): Observable<SeriesResponse> {
         return remote.searchForSeries(seriesName)
     }

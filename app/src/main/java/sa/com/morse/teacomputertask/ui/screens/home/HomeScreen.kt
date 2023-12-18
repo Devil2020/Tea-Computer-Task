@@ -10,9 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,17 +44,24 @@ import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
 import sa.com.morse.teacomputertask.utils.EmptyView
+import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.LoadingView
 import sa.com.morse.teacomputertask.utils.MediaImage
+import sa.com.morse.teacomputertask.utils.onEmpty
+import sa.com.morse.teacomputertask.utils.onFail
+import sa.com.morse.teacomputertask.utils.onLoading
+import sa.com.morse.teacomputertask.utils.onNotEmpty
+import sa.com.morse.teacomputertask.utils.onSuccess
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    vm: HomeViewModel,
     openMovies: () -> Unit = {},
     openSeries: () -> Unit = {},
     openSearch: () -> Unit = {},
-    openDetails: (Int , Boolean) -> Unit = { i: Int, b: Boolean -> }
+    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> }
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -73,7 +85,13 @@ fun HomeScreen(
         val endGuideline = createGuidelineFromStart(0.95F)
         val topGuideline = createGuidelineFromTop(0.01F)
         val centerGuideline = createGuidelineFromStart(0.5f)
-
+        val state = vm.searchItems.observeAsState()
+        val contentModifier = Modifier.constrainAs(emptyView) {
+            linkTo(startGuideline, endGuideline)
+            linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
+            width = Dimension.fillToConstraints
+            height = Dimension.fillToConstraints
+        }
         Image(
             painter = painterResource(id = R.drawable.me),
             contentDescription = "User Image",
@@ -160,29 +178,37 @@ fun HomeScreen(
                 start.linkTo(userImage.start)
             }
         )
-        EmptyView(modifier = Modifier.constrainAs(emptyView) {
-            linkTo(startGuideline, endGuideline)
-            linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
-            width = Dimension.fillToConstraints
-            height = Dimension.fillToConstraints
-        } , message = stringResource(id = R.string.you_must_search))
-/*        LazyHorizontalGrid(
-            modifier = Modifier.constrainAs(emptyView) {
-                linkTo(startGuideline, endGuideline)
-                linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            },
-            rows = GridCells.Fixed(2),
-            state = scroll
-        ) {
-            items(10) {
-               *//* MovieOrSeriesItem{ id, isMovie ->
-                    openDetails.invoke( id, isMovie)
-                }*//*
-            }
-        }*/
 
+
+        state.value
+            ?.onLoading { LoadingView(modifier = contentModifier) }
+            ?.onFail {
+                ErrorView(
+                    modifier = contentModifier,
+                    stringResource(id = R.string.can_not_load_search)
+                )
+            }
+            ?.onSuccess {
+                it.onEmpty {
+                    EmptyView(
+                        modifier = contentModifier,
+                        message = stringResource(id = R.string.you_must_search)
+                    )
+                }
+                    .onNotEmpty {
+                        LazyVerticalGrid(
+                            modifier = contentModifier,
+                            columns = GridCells.Adaptive(minSize = 100.dp),
+                            state = scroll
+                        ) {
+                            items(it) {
+                               MovieOrSeriesItem(item = it) { id, isMovie ->
+                                    openDetails.invoke(id, isMovie)
+                                }
+                            }
+                        }
+                    }
+            }
     }
 }
 
@@ -259,7 +285,11 @@ fun SeriesCategoryItem(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieOrSeriesItem(modifier: Modifier = Modifier , item : MovieOrSeriesItem , onClick : (Int , Boolean)->Unit) {
+fun MovieOrSeriesItem(
+    modifier: Modifier = Modifier,
+    item: MovieOrSeriesItem,
+    onClick: (Int, Boolean) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -277,11 +307,12 @@ fun MovieOrSeriesItem(modifier: Modifier = Modifier , item : MovieOrSeriesItem ,
 
         Text(
             text = item.name, modifier = Modifier
-                .padding(top = 6.dp),
+                .padding(top = 6.dp)
+                .requiredWidthIn(max = 70.dp),
             color = AppColors.GrayE8E8E8,
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold,
-            maxLines = 1 ,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontSize = FontSize._14SP,
             textAlign = TextAlign.Center

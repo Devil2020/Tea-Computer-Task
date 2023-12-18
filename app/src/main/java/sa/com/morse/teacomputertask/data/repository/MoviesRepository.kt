@@ -5,9 +5,10 @@ import sa.com.morse.teacomputertask.data.models.ActorsResponse
 import sa.com.morse.teacomputertask.data.models.MovieDetailResponse
 import sa.com.morse.teacomputertask.data.models.MoviesResponse
 import sa.com.morse.teacomputertask.domain.repositories.IMoviesRepository
+import sa.com.morse.teacomputertask.local.RoomApi
 import sa.com.morse.teacomputertask.remote.MoviesApi
 
-class MoviesRepository (private val remote : MoviesApi) : IMoviesRepository {
+class MoviesRepository (private val remote : MoviesApi , private val cache : RoomApi) : IMoviesRepository , CommonRepository(cache) {
     override fun search(movieName : String): Observable<MoviesResponse> {
         return remote.searchForMovie(movieName)
     }
@@ -23,4 +24,6 @@ class MoviesRepository (private val remote : MoviesApi) : IMoviesRepository {
     override fun getActors(movieId: Int): Observable<ActorsResponse> {
         return remote.loadMovieActors(movieId)
     }
+
+
 }

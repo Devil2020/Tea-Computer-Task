@@ -1,4 +1,5 @@
 import com.android.sdklib.repository.meta.DetailsTypes.AddonDetailsType.Libraries
+import org.gradle.kotlin.dsl.kapt
 
 plugins {
     id("com.android.application")
@@ -16,7 +17,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.1"
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -83,9 +84,13 @@ dependencies {
         implementation(library)
     }
     implementation(JsonParser.Gson)
+    testImplementation(Testing.Junit5)
     DataBase.Room.forEach { library ->
         implementation(library)
     }
+
+
+    kapt(DataBase.RoomKapt)
     DI.Koin.forEach { library ->
         implementation(library)
     }
@@ -95,8 +100,13 @@ dependencies {
     testImplementation(Testing.Junit)
     androidTestImplementation(Testing.JunitExtensions)
     androidTestImplementation(UITesting.Espresso)
+    testImplementation(UITesting.Truth)
+    Observable.RX.forEach {library ->
+        androidTestImplementation(library)
+    }
     androidTestImplementation(platform(Jetpack.ComposePlatform))
     androidTestImplementation(UITesting.ComposeJunit)
+    androidTestImplementation(UITesting.Core)
     debugImplementation(UITesting.ComposeToolsJunit)
     debugImplementation(UITesting.ComposeManifest)
 }

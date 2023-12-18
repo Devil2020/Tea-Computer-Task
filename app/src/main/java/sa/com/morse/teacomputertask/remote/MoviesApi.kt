@@ -28,7 +28,7 @@ interface MoviesApi {
         @Query("page") page: Int = 1
     ): Observable<SeriesResponse>
 
-    @GET("tv/popular?language=en-US&page=1")
+    @GET("trending/tv/day?language=en-US&page=1")
     fun loadPopularSeries(): Observable<SeriesResponse>
 
     @GET("tv/{movieId}?language=en-US")
@@ -40,7 +40,7 @@ interface MoviesApi {
     @GET("tv/{tvId}/credits?language=en-US&page=1")
     fun loadASeriesOfActors(@Path("tvId") tvId: Int): Observable<ActorsResponse>
 
-    @GET("movie/popular?language=en-US&page=1")
+    @GET("trending/movie/day?language=en-US&page=1")
     fun loadPopularMovies(): Observable<MoviesResponse>
 
     @GET("movie/{movieId}?language=en-US")

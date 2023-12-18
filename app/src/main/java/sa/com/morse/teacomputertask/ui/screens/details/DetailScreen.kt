@@ -203,7 +203,7 @@ fun ConstraintLayoutScope.RenderDetails(details: Detail) {
         linkTo(startGuideline, endGuideline)
         width = Dimension.fillToConstraints
     }) {
-        items(details.actors) { user ->
+        items(details.actors.items) { user ->
             ActorItem(user)
         }
     }
