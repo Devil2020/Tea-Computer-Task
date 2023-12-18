@@ -15,7 +15,7 @@
 </br>
 
 ## Download
-Go to the [Releases](https://github.com/Devil2020/Bosta/releases/download/1.0.0/app-commonResources-debug.apk) to download the latest APK.
+Go to the [Releases](https://github.com/Devil2020/Tea-Computer-Task/releases/download/1.0.0/app-debug.apk) to download the latest APK.
 
 
 
