@@ -32,7 +32,7 @@ Go to the [Releases](https://github.com/Devil2020/Bosta/releases/download/1.0.0/
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21
-- [Kotlin](https://kotlinlang.org/) based, [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) + [RX](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) for asynchronous.
+- [Kotlin](https://kotlinlang.org/) based, [RX](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) for asynchronous.
 - [Koin](https://dagger.dev/hilt/) for dependency injection.
 - JetPack
     - Compose - declartive ui .
