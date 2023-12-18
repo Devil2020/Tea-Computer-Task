@@ -2,7 +2,7 @@
 <img src=".images/bg.png"/>
 </p>
 
-<h1 align="center">MAO Trailer</h1>
+<h1 align="center">Tea Computer Task</h1>
 
 <p align="center">
      <a href="https://wakatime.com/badge/user/25e36a94-826e-4b90-bf37-6d78d9028422/project/018c6d46-1989-48c6-9cfc-81a67a2a5c10.svg"/><img alt="API" src="https://wakatime.com/badge/user/25e36a94-826e-4b90-bf37-6d78d9028422/project/018c6d46-1989-48c6-9cfc-81a67a2a5c10.svg"/></a>
