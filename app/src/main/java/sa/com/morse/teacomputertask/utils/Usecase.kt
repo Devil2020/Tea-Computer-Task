@@ -1,30 +1,18 @@
-package sa.com.morse.teacomputertask.utils.base
+package sa.com.morse.teacomputertask.utils
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-abstract class UseCase() {
-
-    fun <SuccessModel : Any> executeUseCase(`do`: () -> Observable<SuccessModel>): Observable<State<SuccessModel>> {
-        return `do`.invoke().map {
-            State.Success(it) as State<SuccessModel>
-        }.onErrorReturn {
-            State.Error(
-                it.toExceptionType()
-            )
-        }.startWithItem(State.Loading)
-    }
-
-}
 
 abstract class SingleUseCase<in IncomingParameterType, out OutComingResultType>() {
 
     operator fun invoke(args: IncomingParameterType? = null): Observable<State<@UnsafeVariance OutComingResultType>> =
         execute(args)
-            .map {
-                State.Success(it) as State<OutComingResultType>
-            }.onErrorReturn {
+            .subscribeOn(Schedulers.io())
+            .onErrorReturn {
                 State.Error(
                     it.toExceptionType()
                 )
@@ -38,7 +26,7 @@ class GenericBaseUseCase<in InputType, out ResultType>(private val exe: (args: I
     SingleUseCase<InputType, ResultType>() {
 
     override fun execute(args: InputType?): Observable<State<@UnsafeVariance ResultType>> {
-        return  exe.invoke(args)
+        return exe.invoke(args)
     }
 
 }

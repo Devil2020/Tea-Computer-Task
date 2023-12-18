@@ -2,7 +2,7 @@ package sa.com.morse.teacomputertask.app.navigation
 
 import androidx.navigation.NavController
 
-object  MoviesDirections {
+object MoviesDirections {
 
     fun openHomeScreen(controller: NavController) {
         with(controller) {
@@ -16,9 +16,21 @@ object  MoviesDirections {
         }
     }
 
-    fun openMovieDetailsScreen(controller: NavController , id : Int) {
+    fun closeMoviesScreen(controller: NavController) {
         with(controller) {
-            MovieRoutes.DetailsRoute.navigate()
+            MovieRoutes.MoviesRoute.pop()
+        }
+    }
+
+    fun closeSearchScreen(controller: NavController) {
+        with(controller) {
+            MovieRoutes.SearchRoute.pop()
+        }
+    }
+
+    fun openMovieDetailsScreen(controller: NavController, id: Int , isMovie : Boolean) {
+        with(controller) {
+            MovieRoutes.DetailsRoute.navigateWithArguments(id.toString() , isMovie.toString())
         }
     }
 
@@ -26,6 +38,12 @@ object  MoviesDirections {
     fun openSeriesScreen(controller: NavController) {
         with(controller) {
             MovieRoutes.SeriesRoute.navigate()
+        }
+    }
+
+    fun closeSeriesScreen(controller: NavController) {
+        with(controller) {
+            MovieRoutes.SeriesRoute.pop()
         }
     }
 

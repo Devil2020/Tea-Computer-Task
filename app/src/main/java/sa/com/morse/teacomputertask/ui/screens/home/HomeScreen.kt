@@ -13,39 +13,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import sa.com.morse.teacomputertask.R
+import sa.com.morse.teacomputertask.app.navigation.MoviesDirections
+import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
-import sa.com.morse.teacomputertask.utils.base.ErrorView
+import sa.com.morse.teacomputertask.utils.EmptyView
+import sa.com.morse.teacomputertask.utils.MediaImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, showSystemUi = true)
@@ -55,7 +49,7 @@ fun HomeScreen(
     openMovies: () -> Unit = {},
     openSeries: () -> Unit = {},
     openSearch: () -> Unit = {},
-    openDetails: (Int) -> Unit = {}
+    openDetails: (Int , Boolean) -> Unit = { i: Int, b: Boolean -> }
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -145,7 +139,7 @@ fun HomeScreen(
                 top.linkTo(categoriesTitle.bottom, 5.dp)
                 width = Dimension.fillToConstraints
             }
-            .clickable (onClick = openMovies))
+            .clickable(onClick = openMovies))
 
         SeriesCategoryItem(modifier = Modifier
             .constrainAs(seriesView) {
@@ -166,8 +160,13 @@ fun HomeScreen(
                 start.linkTo(userImage.start)
             }
         )
-
-        LazyHorizontalGrid(
+        EmptyView(modifier = Modifier.constrainAs(emptyView) {
+            linkTo(startGuideline, endGuideline)
+            linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
+            width = Dimension.fillToConstraints
+            height = Dimension.fillToConstraints
+        } , message = stringResource(id = R.string.you_must_search))
+/*        LazyHorizontalGrid(
             modifier = Modifier.constrainAs(emptyView) {
                 linkTo(startGuideline, endGuideline)
                 linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
@@ -178,11 +177,11 @@ fun HomeScreen(
             state = scroll
         ) {
             items(10) {
-                MovieOrSeriesItem{
-
-                }
+               *//* MovieOrSeriesItem{ id, isMovie ->
+                    openDetails.invoke( id, isMovie)
+                }*//*
             }
-        }
+        }*/
 
     }
 }
@@ -260,36 +259,36 @@ fun SeriesCategoryItem(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieOrSeriesItem(modifier: Modifier = Modifier , onClick : (Int)->Unit) {
+fun MovieOrSeriesItem(modifier: Modifier = Modifier , item : MovieOrSeriesItem , onClick : (Int , Boolean)->Unit) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(10.dp)
             .clickable {
-                onClick.invoke(1)
+                onClick.invoke(item.id, item.isMovie)
             }
             .then(modifier)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.test_movie),
-            contentDescription = "movie poster image",
+        MediaImage(
+            url = item.image,
             modifier = Modifier.size(100.dp, 130.dp),
-            contentScale = ContentScale.FillBounds
         )
 
         Text(
-            text = "Secret Wars", modifier = Modifier
+            text = item.name, modifier = Modifier
                 .padding(top = 6.dp),
             color = AppColors.GrayE8E8E8,
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold,
+            maxLines = 1 ,
+            overflow = TextOverflow.Ellipsis,
             fontSize = FontSize._14SP,
             textAlign = TextAlign.Center
         )
 
         Text(
-            text = "2022", modifier = Modifier
+            text = item.date, modifier = Modifier
                 .padding(top = 6.dp),
             color = AppColors.Gray828282,
             style = MaterialTheme.typography.bodySmall,

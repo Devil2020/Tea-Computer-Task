@@ -1,32 +1,38 @@
 package sa.com.morse.teacomputertask.data.models
 
+import sa.com.morse.teacomputertask.domain.models.Detail
+import sa.com.morse.teacomputertask.utils.Constants
+
 data class MovieDetailResponse(
     val adult: Boolean?,
-    val backdrop_path: String?,
+    val backdrop_path: String,
     val belongs_to_collection: Any?,
     val budget: Int?,
     val genres: List<Genre?>?,
     val homepage: String?,
-    val id: Int?,
+    val id: Int,
     val imdb_id: String?,
     val original_language: String?,
     val original_title: String?,
-    val overview: String?,
+    val overview: String,
     val popularity: Double?,
     val poster_path: String?,
     val production_companies: List<ProductionCompany?>?,
     val production_countries: List<ProductionCountry?>?,
-    val release_date: String?,
+    val release_date: String,
     val revenue: Int?,
     val runtime: Int?,
     val spoken_languages: List<SpokenLanguage?>?,
-    val status: String?,
+    val status: String,
     val tagline: String?,
-    val title: String?,
-    val video: Boolean?,
+    val title: String,
+    val video: Boolean,
     val vote_average: Double?,
     val vote_count: Int?
 ) {
+   private fun getBackgroundImage() = "${Constants.imageApiBackground}/$backdrop_path"
+    fun toDetails(actors : List<ActorsResponse.User>) = Detail(getBackgroundImage() ,id , overview , title , video , release_date , actors , status )
+
     data class Genre(
         val id: Int?,
         val name: String?

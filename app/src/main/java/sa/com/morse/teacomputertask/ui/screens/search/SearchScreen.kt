@@ -3,13 +3,15 @@ package sa.com.morse.teacomputertask.ui.screens.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +23,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -32,28 +39,53 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import sa.com.morse.teacomputertask.R
 import sa.com.morse.teacomputertask.ui.screens.home.MovieOrSeriesItem
+import sa.com.morse.teacomputertask.ui.screens.series.SeriesItem
+import sa.com.morse.teacomputertask.ui.screens.series.SeriesViewModel
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
+import sa.com.morse.teacomputertask.utils.EmptyView
+import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.LoadingView
+import sa.com.morse.teacomputertask.utils.onEmpty
+import sa.com.morse.teacomputertask.utils.onFail
+import sa.com.morse.teacomputertask.utils.onLoading
+import sa.com.morse.teacomputertask.utils.onNotEmpty
+import sa.com.morse.teacomputertask.utils.onSuccess
 
-@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier , openDetails : (Int)->Unit = {}) {
-    ConstraintLayout(modifier = Modifier
-        .fillMaxSize()
-        .background(AppColors.Black1A1A1D)
-        .then(modifier)) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    vm: SearchViewModel,
+    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> },
+    finish: () -> Unit = {}
+) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppColors.Black1A1A1D)
+            .then(modifier)
+    ) {
         val scroll = rememberLazyGridState()
-        val (actionbar,   searchView, list) = createRefs()
+        val (actionbar, searchView, list) = createRefs()
         val startGuideline = createGuidelineFromStart(0.05F)
         val endGuideline = createGuidelineFromStart(0.95F)
         val topGuideline = createGuidelineFromTop(0.01F)
+        var search by remember { mutableStateOf("") }
+        val state = vm.items.observeAsState()
+        val contentModifier = Modifier.constrainAs(list) {
+            linkTo(startGuideline, endGuideline)
+            linkTo(searchView.bottom, parent.bottom, topMargin = 10.dp)
+            width = Dimension.fillToConstraints
+            height = Dimension.fillToConstraints
+        }
         TopAppBar(modifier = Modifier
             .constrainAs(actionbar) {
                 top.linkTo(topGuideline)
@@ -76,7 +108,9 @@ fun SearchScreen(modifier: Modifier = Modifier , openDetails : (Int)->Unit = {})
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back Button",
                     tint = AppColors.WhiteFFFFFF,
-                    modifier = Modifier.padding(start = 10.dp)
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .clickable { finish.invoke() }
                 )
             })
 
@@ -97,8 +131,11 @@ fun SearchScreen(modifier: Modifier = Modifier , openDetails : (Int)->Unit = {})
 
         ) {
             OutlinedTextField(
-                value = "",
-                onValueChange = { /*viewModel.updateQuery(it)*/ },
+                value = search,
+                onValueChange = {
+                    search = it
+                    vm.search(it)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
@@ -131,23 +168,30 @@ fun SearchScreen(modifier: Modifier = Modifier , openDetails : (Int)->Unit = {})
             )
         }
 
-        LazyVerticalGrid(
-            modifier = Modifier.constrainAs(list) {
-                linkTo(startGuideline, endGuideline)
-                linkTo(searchView.bottom, parent.bottom, topMargin = 10.dp)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            },
-            columns = GridCells.Adaptive(minSize = 100.dp),
-            state = scroll
-        ) {
-            items(20) {
-                MovieOrSeriesItem{
-                    openDetails.invoke(it)
+        state.value
+            ?.onLoading { LoadingView(modifier = contentModifier) }
+            ?.onFail {
+                ErrorView(modifier = contentModifier) {
+                    vm.search(search)
                 }
             }
-        }
-
+            ?.onSuccess {
+                it.onEmpty {
+                    EmptyView(modifier = contentModifier , message = stringResource(id = R.string.not_found_result))
+                }.onNotEmpty {
+                    LazyVerticalGrid(
+                        modifier = contentModifier,
+                        columns = GridCells.Adaptive(minSize = 100.dp),
+                        state = scroll
+                    ) {
+                        items(it) {item ->
+                            MovieOrSeriesItem(item = item) { id, isMovie ->
+                                openDetails.invoke(id, isMovie)
+                            }
+                        }
+                    }
+                }
+            }
     }
 
 }

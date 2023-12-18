@@ -16,7 +16,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.3"
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -41,6 +41,7 @@ android {
             )
             buildConfigField("String", "api", "\"https://api.themoviedb.org/3/\"")
             buildConfigField("String", "key", "\"12ae0210d107863fd1d89b1e2ee1f26a\"")
+            buildConfigField("String", "accessToken", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMmFlMDIxMGQxMDc4NjNmZDFkODliMWUyZWUxZjI2YSIsInN1YiI6IjViMjQ0OGViMGUwYTI2NjcyOTAwMDMzZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X8Q22LOwOYKWYrpKoiE6ie6IoYUzOPqyJHAEsP0tvfI\"")
         }
     }
     compileOptions {

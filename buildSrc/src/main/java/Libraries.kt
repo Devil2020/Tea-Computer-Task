@@ -1,3 +1,5 @@
+
+
 object CustomViews {
 
     const val Flashbar =
@@ -18,7 +20,8 @@ object NetworkLibrary {
         "com.squareup.okhttp3:logging-interceptor:${Versions.NetworkLibraries.OkHttpVersion}",
         "com.squareup.retrofit2:converter-scalars:${Versions.NetworkLibraries.RetrofitVersion}",
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.NetworkLibraries.CoroutineAdapterVersion}",
-         "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
+         "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" ,
+        "com.github.akarnokd:rxjava3-retrofit-adapter:${Versions.NetworkLibraries.RXVersion}"
     )
 
 }
@@ -38,6 +41,7 @@ object DI {
     val Koin = arrayListOf(
         "io.insert-koin:koin-core:${Versions.DI.KoinVersion}",
         "io.insert-koin:koin-android:${Versions.DI.KoinAndroidVersion}",
+         "io.insert-koin:koin-androidx-compose:3.4.1"
     )
 
 
@@ -108,7 +112,8 @@ object Jetpack {
         "androidx.compose.ui:ui-graphics",
         "androidx.compose.ui:ui-tooling-preview",
         "androidx.compose.material3:material3",
-        "com.google.accompanist:accompanist-systemuicontroller:${Versions.Jetpack.AccompanistComposeVersion}"
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.Jetpack.AccompanistComposeVersion}",
+        "androidx.compose.runtime:runtime-livedata:${Versions.Jetpack.LiveData}"
     )
 
     val ComposePlatform = "androidx.compose:compose-bom:${Versions.Jetpack.ComposeVersion}"

@@ -13,6 +13,13 @@ object AppColors {
     val GrayE8E8E8 = Color(0XFFE8E8E8)
     val Blue19A1BE = Color(0xFF19A1BE)
     val BlueB7DFFF = Color(0xFFB7DFFF)
+
+    val Blue008EFF = Color(0xFF008EFF)
+    val OrangeFF9800 = Color(0xFFFF9800)
+    val Green4CAF50 = Color(0xFF4CAF50)
+    val RedF44336 = Color(0xFFF44336)
+    val Blue3F51B5 = Color(0xFF3F51B5)
+
     val Burbule7D4192 = Color(0XFF7D4192)
     val WhiteFFFFFF = Color(0XFFFFFFFF)
 }

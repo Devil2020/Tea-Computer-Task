@@ -9,6 +9,7 @@ object Versions {
     }
 
     object NetworkLibraries {
+        val RXVersion ="3.0.0"
         const val RetrofitVersion = "2.9.0"
         const val OkHttpVersion = "4.9.2"
         const val CoroutineAdapterVersion = "0.9.2"
@@ -20,8 +21,9 @@ object Versions {
     }
 
     object DI {
-        const val KoinVersion = "3.2.0"
-        const val KoinAndroidVersion = "3.2.0"
+        const val KoinVersion = "3.3.2"
+        const val KoinComposeVersion = "3.5.1"
+        const val KoinAndroidVersion = "3.3.2"
     }
 
     object MaterialDesign {
@@ -56,6 +58,7 @@ object Versions {
         const val NavigationRuntimeVersion = "2.7.5"
         const val NavigationComposeVersion = "2.7.5"
         const val AccompanistComposeVersion = "0.32.0"
+        const val LiveData = "1.5.4"
         const val LifeCycleVersion = "2.6.2"
     }
 
