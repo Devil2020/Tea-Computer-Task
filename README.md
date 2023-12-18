@@ -38,7 +38,6 @@ Go to the [Releases](https://github.com/Devil2020/Tea-Computer-Task/releases/dow
     - Compose - declartive ui .
     - Lifecycle - dispose of observing data when lifecycle state changes.
     - ViewModel - UI related data holder, lifecycle aware.
-    - RunTime Cashe construct a Cache using the abstract layer .
 - Architecture
     - MVVM Architecture (View - ViewModel - Model)
     - Repository pattern
@@ -46,7 +45,6 @@ Go to the [Releases](https://github.com/Devil2020/Tea-Computer-Task/releases/dow
 - [Room](https://github.com/square/retrofit) - construct the Cache .
 - [Gson](https://github.com/square/moshi/) - A modern JSON library for Kotlin and Java.
 - [Coin](https://square.github.io/picasso/)
-- [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
 
 
 
