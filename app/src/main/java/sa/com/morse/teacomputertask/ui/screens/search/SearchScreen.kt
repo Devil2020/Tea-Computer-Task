@@ -23,6 +23,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -64,9 +65,9 @@ import sa.com.morse.teacomputertask.utils.onSuccess
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    vm: SearchViewModel,
-    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> },
-    finish: () -> Unit = {}
+    vm: SearchViewModel?,
+    openDetails: (Int, Boolean) -> Unit ,
+    finish: () -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -81,12 +82,15 @@ fun SearchScreen(
         val endGuideline = createGuidelineFromStart(0.95F)
         val topGuideline = createGuidelineFromTop(0.01F)
         var search by remember { mutableStateOf("") }
-        val state = vm.items.observeAsState()
+        val state = vm?.items?.observeAsState()
         val contentModifier = Modifier.constrainAs(list) {
             linkTo(startGuideline, endGuideline)
             linkTo(searchView.bottom, parent.bottom, topMargin = 10.dp)
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
+        }
+        LaunchedEffect(key1 = true){
+            vm?.search("")
         }
         TopAppBar(modifier = Modifier
             .constrainAs(actionbar) {
@@ -136,7 +140,7 @@ fun SearchScreen(
                 value = search,
                 onValueChange = {
                     search = it
-                    vm.search(it)
+                    vm?.search(it)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -170,7 +174,7 @@ fun SearchScreen(
             )
         }
 
-        state.value
+        state?.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
                 ErrorView(modifier = contentModifier, it.getErrorMessage()) {
@@ -192,7 +196,7 @@ fun SearchScreen(
                         items(it) { item ->
                             MovieOrSeriesItem(item = item) { id, isMovie ->
                                 search = ""
-                                vm.save(item)
+                                vm?.save(item)
                                 openDetails.invoke(id, isMovie)
                             }
                         }

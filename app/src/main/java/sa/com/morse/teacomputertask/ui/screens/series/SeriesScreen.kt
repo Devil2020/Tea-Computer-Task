@@ -54,9 +54,9 @@ import sa.com.morse.teacomputertask.utils.onSuccess
 @Composable
 fun SeriesScreen(
     modifier: Modifier = Modifier,
-    vm: SeriesViewModel,
-    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> },
-    finish: () -> Unit = {}
+    vm: SeriesViewModel ?,
+    openDetails: (Int, Boolean) -> Unit,
+    finish: () -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -65,7 +65,7 @@ fun SeriesScreen(
             .then(modifier)
     ) {
 
-        val state = vm.series.observeAsState()
+        val state = vm?.series?.observeAsState()
         val scroll = rememberLazyGridState()
         val (actionbar, list) = createRefs()
         val startGuideline = createGuidelineFromStart(0.05F)
@@ -105,7 +105,7 @@ fun SeriesScreen(
                 )
             })
 
-        state.value
+        state?.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
                 ErrorView(modifier = contentModifier, it.getErrorMessage()) {

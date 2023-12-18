@@ -41,9 +41,9 @@ import sa.com.morse.teacomputertask.utils.onSuccess
 @Composable
 fun MoviesScreen(
     modifier: Modifier = Modifier,
-    vm: MoviesViewModel,
-    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> } ,
-    finish : () -> Unit = {}
+    vm: MoviesViewModel?,
+    openDetails: (Int, Boolean) -> Unit ,
+    finish : () -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun MoviesScreen(
             .then(modifier)
     ) {
 
-        val state = vm.movies.observeAsState()
+        val state = vm?.movies?.observeAsState()
         val scroll = rememberLazyGridState()
         val (actionbar, list) = createRefs()
         val startGuideline = createGuidelineFromStart(0.05F)
@@ -93,7 +93,7 @@ fun MoviesScreen(
                 )
             })
 
-        state.value
+        state?.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
                 ErrorView(modifier = contentModifier,it.getErrorMessage()) {

@@ -57,11 +57,11 @@ import sa.com.morse.teacomputertask.utils.onSuccess
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    vm: HomeViewModel,
-    openMovies: () -> Unit = {},
-    openSeries: () -> Unit = {},
-    openSearch: () -> Unit = {},
-    openDetails: (Int, Boolean) -> Unit = { i: Int, b: Boolean -> }
+    vm: HomeViewModel?,
+    openMovies: () -> Unit,
+    openSeries: () -> Unit,
+    openSearch: () -> Unit,
+    openDetails: (Int, Boolean) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -85,7 +85,7 @@ fun HomeScreen(
         val endGuideline = createGuidelineFromStart(0.95F)
         val topGuideline = createGuidelineFromTop(0.01F)
         val centerGuideline = createGuidelineFromStart(0.5f)
-        val state = vm.searchItems.observeAsState()
+        val state = vm?.searchItems?.observeAsState()
         val contentModifier = Modifier.constrainAs(emptyView) {
             linkTo(startGuideline, endGuideline)
             linkTo(randomListTitle.bottom, parent.bottom, topMargin = 10.dp)
@@ -180,7 +180,7 @@ fun HomeScreen(
         )
 
 
-        state.value
+        state?.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
                 ErrorView(

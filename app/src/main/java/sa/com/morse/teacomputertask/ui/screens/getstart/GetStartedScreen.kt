@@ -24,7 +24,7 @@ import sa.com.morse.teacomputertask.utils.ShadowButton
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GetStartedScreen(modifier: Modifier = Modifier , navigateToHome : () -> Unit = {}) {
+fun GetStartedScreen(modifier: Modifier = Modifier , navigateToHome : () -> Unit) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()

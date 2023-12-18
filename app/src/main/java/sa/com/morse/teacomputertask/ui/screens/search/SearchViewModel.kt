@@ -15,9 +15,7 @@ class SearchViewModel (private val searchUseCase: SearchUseCase , private val sa
     private val _items = MutableLiveData<State<ArrayList<MovieOrSeriesItem>>>()
     val items: LiveData<State<ArrayList<MovieOrSeriesItem>>> get() = _items
 
-    init {
-        search("")
-    }
+
     fun search(name : String) {
         searchUseCase.invoke(name)
             .subscribe { response ->

@@ -52,7 +52,7 @@ import sa.com.morse.teacomputertask.utils.onLoading
 import sa.com.morse.teacomputertask.utils.onSuccess
 
 @Composable
-fun DetailScreen(modifier: Modifier = Modifier, vm: DetailViewModel) {
+fun DetailScreen(modifier: Modifier = Modifier, vm: DetailViewModel?) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -61,9 +61,9 @@ fun DetailScreen(modifier: Modifier = Modifier, vm: DetailViewModel) {
     ) {
         val (loading, error) = createRefs()
 
-        val state = vm.details.observeAsState()
+        val state = vm?.details?.observeAsState()
 
-        state.value
+        state?.value
             ?.onLoading {
                 LoadingView(modifier = Modifier.constrainAs(loading) {
                     linkTo(parent.top, parent.bottom)
