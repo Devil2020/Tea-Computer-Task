@@ -8,18 +8,18 @@ import io.reactivex.rxjava3.kotlin.addTo
 import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.domain.usecases.SaveMovieOrSeriesUseCase
 import sa.com.morse.teacomputertask.domain.usecases.SearchUseCase
+import sa.com.morse.teacomputertask.utils.BaseViewModel
 import sa.com.morse.teacomputertask.utils.State
 
-class SearchViewModel (private val seachUseCase: SearchUseCase , private val saveUseCase : SaveMovieOrSeriesUseCase) : ViewModel() {
+class SearchViewModel (private val searchUseCase: SearchUseCase , private val saveUseCase : SaveMovieOrSeriesUseCase) : BaseViewModel() {
     private val _items = MutableLiveData<State<ArrayList<MovieOrSeriesItem>>>()
     val items: LiveData<State<ArrayList<MovieOrSeriesItem>>> get() = _items
-    private val disposableBag = CompositeDisposable()
 
     init {
         search("")
     }
     fun search(name : String) {
-        seachUseCase.invoke(name)
+        searchUseCase.invoke(name)
             .subscribe { response ->
                 _items.postValue(response)
             }
@@ -29,8 +29,5 @@ class SearchViewModel (private val seachUseCase: SearchUseCase , private val sav
     fun save (item: MovieOrSeriesItem){
         saveUseCase.invoke(item).subscribe {  }.addTo(disposableBag)
     }
-    override fun onCleared() {
-        super.onCleared()
-        disposableBag.clear()
-    }
+
 }

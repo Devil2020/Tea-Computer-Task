@@ -10,13 +10,13 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import sa.com.morse.teacomputertask.data.models.MoviesResponse
 import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
+import sa.com.morse.teacomputertask.utils.BaseViewModel
 import sa.com.morse.teacomputertask.utils.State
 
-class MoviesViewModel(private val moviesUseCase: LoadMoviesUseCase) : ViewModel() {
+class MoviesViewModel(private val moviesUseCase: LoadMoviesUseCase) : BaseViewModel() {
 
     private val _movies = MutableLiveData<State<ArrayList<MovieOrSeriesItem>>>()
     val movies: LiveData<State<ArrayList<MovieOrSeriesItem>>> get() = _movies
-    private val disposableBag = CompositeDisposable()
 
     init {
         loadMovies()
@@ -29,9 +29,6 @@ class MoviesViewModel(private val moviesUseCase: LoadMoviesUseCase) : ViewModel(
             .addTo(disposableBag)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposableBag.clear()
-    }
+
 
 }

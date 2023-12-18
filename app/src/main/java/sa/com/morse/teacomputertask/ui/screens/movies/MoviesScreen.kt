@@ -31,6 +31,7 @@ import sa.com.morse.teacomputertask.ui.screens.home.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
 import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.ExceptionType
 import sa.com.morse.teacomputertask.utils.LoadingView
 import sa.com.morse.teacomputertask.utils.onFail
 import sa.com.morse.teacomputertask.utils.onLoading
@@ -95,7 +96,7 @@ fun MoviesScreen(
         state.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
-                ErrorView(modifier = contentModifier) {
+                ErrorView(modifier = contentModifier,it.getErrorMessage()) {
                     vm.loadMovies()
                 }
             }

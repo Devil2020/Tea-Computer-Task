@@ -42,6 +42,7 @@ import sa.com.morse.teacomputertask.ui.screens.movies.MoviesViewModel
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
 import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.ExceptionType
 import sa.com.morse.teacomputertask.utils.LoadingView
 import sa.com.morse.teacomputertask.utils.MediaImage
 import sa.com.morse.teacomputertask.utils.getRandomColor
@@ -98,14 +99,16 @@ fun SeriesScreen(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back Button",
                     tint = AppColors.WhiteFFFFFF,
-                    modifier = Modifier.padding(start = 10.dp).clickable { finish.invoke() }
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .clickable { finish.invoke() }
                 )
             })
 
         state.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
-                ErrorView(modifier = contentModifier) {
+                ErrorView(modifier = contentModifier, it.getErrorMessage()) {
                     vm.loadSeries()
                 }
             }

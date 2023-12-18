@@ -62,5 +62,17 @@ sealed class ExceptionType() {
     object EOFException : ExceptionType()
     object UserCancellationException : ExceptionType()
     data class GenericException(val message: String) : ExceptionType()
+
+    fun getErrorMessage() = when (this) {
+        is ExceptionType.GenericException -> this.message
+        ExceptionType.ProtocolException -> "* Sorry ,Cannot write output after reading input, Please Try Again Later ."
+        ExceptionType.SSLException -> "* Sorry ,Error occured while reading from the Secure socket, Please Try Again Later ."
+        ExceptionType.SSLHandshakeException -> "* Sorry ,Error occured while reading from the Secure socket, Please Try Again Later ."
+        ExceptionType.SocketException -> "*The Connection is Timeout , Please Try Again Later ."
+        ExceptionType.SocketTimeoutException -> "*The Connection is Timeout , Please Try Again Later ."
+        ExceptionType.UnknownHostException -> "* Sorry ,No Internet Found , Please Try Again Later ."
+        ExceptionType.UserCancellationException -> "* Sorry , but you may be cancelled the request from your side , Please Try Again Later ."
+        else ->  "* Sorry , but there is an Error happened , Please Try Again Later ."
+    }
 }
 

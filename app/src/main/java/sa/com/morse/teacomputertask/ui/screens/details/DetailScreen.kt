@@ -43,6 +43,7 @@ import sa.com.morse.teacomputertask.domain.models.Detail
 import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
 import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.ExceptionType
 import sa.com.morse.teacomputertask.utils.LoadingView
 import sa.com.morse.teacomputertask.utils.MediaImage
 import sa.com.morse.teacomputertask.utils.ShadowButton
@@ -75,7 +76,9 @@ fun DetailScreen(modifier: Modifier = Modifier, vm: DetailViewModel) {
                     linkTo(parent.start, parent.end)
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
-                })
+                } , it.getErrorMessage()){
+                    vm.loadDetails()
+                }
             }
             ?.onSuccess {
                 RenderDetails(details = it)

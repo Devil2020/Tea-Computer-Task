@@ -10,6 +10,7 @@ import sa.com.morse.teacomputertask.domain.models.Detail
 import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.domain.usecases.LoadASeriesOfDetailUseCase
 import sa.com.morse.teacomputertask.domain.usecases.LoadMovieDetailUseCase
+import sa.com.morse.teacomputertask.utils.BaseViewModel
 import sa.com.morse.teacomputertask.utils.State
 import sa.com.morse.teacomputertask.utils.onFalse
 import sa.com.morse.teacomputertask.utils.onTrue
@@ -18,17 +19,16 @@ class DetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val movieUseCase: LoadMovieDetailUseCase,
     private val seriesUseCase: LoadASeriesOfDetailUseCase
-) : ViewModel() {
+) : BaseViewModel() {
     val id: Int? by lazy {
         savedStateHandle.get<Int>("id")
     }
-    val isMovie: Boolean by lazy {
+    private val isMovie: Boolean by lazy {
         savedStateHandle.get<Boolean>("isMovie") ?: true
     }
 
     private val _details = MutableLiveData<State<Detail>>()
     val details: LiveData<State<Detail>> get() = _details
-    private val disposableBag = CompositeDisposable()
 
     init {
         loadDetails()
@@ -50,8 +50,4 @@ class DetailViewModel(
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposableBag.clear()
-    }
 }

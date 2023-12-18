@@ -52,6 +52,7 @@ import sa.com.morse.teacomputertask.ui.theme.AppColors
 import sa.com.morse.teacomputertask.ui.theme.FontSize
 import sa.com.morse.teacomputertask.utils.EmptyView
 import sa.com.morse.teacomputertask.utils.ErrorView
+import sa.com.morse.teacomputertask.utils.ExceptionType
 import sa.com.morse.teacomputertask.utils.LoadingView
 import sa.com.morse.teacomputertask.utils.onEmpty
 import sa.com.morse.teacomputertask.utils.onFail
@@ -172,7 +173,7 @@ fun SearchScreen(
         state.value
             ?.onLoading { LoadingView(modifier = contentModifier) }
             ?.onFail {
-                ErrorView(modifier = contentModifier) {
+                ErrorView(modifier = contentModifier, it.getErrorMessage()) {
                     vm.search(search)
                 }
             }

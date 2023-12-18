@@ -8,14 +8,14 @@ import io.reactivex.rxjava3.kotlin.addTo
 import sa.com.morse.teacomputertask.domain.models.Detail
 import sa.com.morse.teacomputertask.domain.models.MovieOrSeriesItem
 import sa.com.morse.teacomputertask.domain.usecases.LoadMostSearchedListUseCase
+import sa.com.morse.teacomputertask.utils.BaseViewModel
 import sa.com.morse.teacomputertask.utils.State
 import sa.com.morse.teacomputertask.utils.onFalse
 import sa.com.morse.teacomputertask.utils.onTrue
 
-class HomeViewModel(private val useCase: LoadMostSearchedListUseCase) : ViewModel() {
+class HomeViewModel(private val useCase: LoadMostSearchedListUseCase) : BaseViewModel() {
     private val _searchItems = MutableLiveData<State<ArrayList<MovieOrSeriesItem>>>()
     val searchItems: LiveData<State<ArrayList<MovieOrSeriesItem>>> get() = _searchItems
-    private val disposableBag = CompositeDisposable()
 
     init {
         loadMostSearched()
@@ -27,11 +27,6 @@ class HomeViewModel(private val useCase: LoadMostSearchedListUseCase) : ViewMode
             _searchItems.postValue(response)
         }.addTo(disposableBag)
 
-
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposableBag.clear()
-    }
 }
