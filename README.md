@@ -14,6 +14,25 @@
    upon running the application you will face a OnBoarding screen , then you will find Home screen if we just press on Movies or Series it will get your specific data , also when you search for any movie you will find the movie added to currently searched ./p>
 </br>
 
+## Task Description
+
+**You have 5 days to complete this coding challenge**. Once complete, upload your code to an online repository of your choice and share the clone link with Nermeen Saleh- Nermeen_saleh@teacomputers.com
+
+Build an android app that displays all the trending Movies and Series using the Movie API linked below. Users can also select series and movies based on their preferred genre as well as get extra details about the specific series or movie by selecting it. Create a section where the user can search for movies and series. Users can search by the movie name or series name and they will get to see all the results related to that particular name.
+
+### Things to think about
+
+- How would you manage memory?
+- How would you store data offline and regulate it so that you don't run out of internal storage?
+- What kind of design patterns would you use and why?
+- How would you write tests for your application?
+
+### Extra details
+
+- https://www.themoviedb.org/documentation/api
+- Technologies expected: Java, Kotlin , RXJava, Room Persistence, Retrofit
+- Preferred to use Jetpack Compose
+
 ## Download
 Go to the [Releases](https://github.com/Devil2020/Tea-Computer-Task/releases/download/1.0.0/app-debug.apk) to download the latest APK.
 
